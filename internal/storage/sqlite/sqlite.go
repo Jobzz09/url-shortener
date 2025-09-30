@@ -3,16 +3,16 @@ package sqlite
 import (
 	"database/sql"
 	"fmt"
+	"net/url"
+	storage "url-shortener/internal/storage"
+
+	_ "github.com/mattn/go-sqlite3" // init sqlite3 driver
 )
 
-type Storage struct {
-	db *sql.DB
-}
-
-func InitStorage(storagePasswd string) (*Storage, error) {
+func InitStorage(storagePath string) (*storage.Storage, error) {
 	const op = "storage.sqlite.New"
 
-	db, err := sql.Open("sqlite3", "./url-shortener.db")
+	db, err := sql.Open("sqlite3", storagePath)
 	if err != nil {
 		return nil, fmt.Errorf("%s:%w", op, err)
 	}
@@ -33,5 +33,13 @@ func InitStorage(storagePasswd string) (*Storage, error) {
 		return nil, fmt.Errorf("%s:%w", op, err)
 	}
 
-	return &Storage{db}, nil
+	return &storage.Storage{Db: db}, nil
+}
+
+func (s *storage.Storage) SaveUrl(url_ url.URL, alias url.URL) (int64, error) {
+	const op = "storage.sqlite.SaveUrl"
+
+	stmt, err := s.db.Prepare
+
+	
 }

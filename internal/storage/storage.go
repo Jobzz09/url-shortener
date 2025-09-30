@@ -1,8 +1,18 @@
 package storage
 
-import "errors"
+import (
+	"database/sql"
+	"errors"
+)
 
 var (
-	ErrUrlNotFound = errors.New("Url not found!")
-	ErrUrlExists   = errors.New("Url exists")
+	ErrUrlNotFound = errors.New("url not found")
+	ErrUrlExists   = errors.New("url exists")
 )
+
+type Storage struct {
+	Db *sql.DB
+	
+}
+
+
